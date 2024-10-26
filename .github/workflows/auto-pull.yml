@@ -39,6 +39,7 @@ jobs:
         run: |
           echo "ACTIONS_RUNNER_DEBUG=true" >> $GITHUB_ENV
           echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
+          echo {{ ansible_user }}
 
       - name: Pull Latest Code on Servers
         env:
