@@ -11,7 +11,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
       - name: Setup SSH for Access
         env:
@@ -22,7 +27,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H 98.81.160.170 >> ~/.ssh/known_hosts
 
-      - name: Pull Latest Code on Server 1
+      - name: Pull Latest Code on Server Dev
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
