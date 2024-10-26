@@ -18,11 +18,6 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Ansible
-        run: |
-          sudo apt update
-          sudo apt install -y ansible
-
       - name: Setup SSH for Access
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -35,16 +30,18 @@ jobs:
             ssh-keyscan -H $host >> ~/.ssh/known_hosts
           done
 
-      - name: Enable Debug Logging
-        run: |
-          echo "ACTIONS_RUNNER_DEBUG=true" >> $GITHUB_ENV
-          echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
-          echo ${{ ansible_user }}
-
       - name: Pull Latest Code on Servers
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          for host in $(grep -Eo '^[^#;]+(\.[^#;]+)(com|net)' inventory); do
-            ssh -i ~/.ssh/id_rsa {{ ansible_user }}@$host "cd /Ansible && git pull origin master"
-          done
+          while read -r line; do
+            # Extract the host and ansible_user from each line in the inventory
+            host=$(echo "$line" | grep -Eo '^[^ ]+')
+            ansible_user=$(echo "$line" | grep -Eo 'ansible_user=[^ ]+' | cut -d'=' -f2)
+
+            # If ansible_user is empty, set a default user (e.g., ubuntu)
+            ansible_user=${ansible_user:-ubuntu}
+
+            # Run SSH command to pull latest code
+            ssh -i ~/.ssh/id_rsa $ansible_user@$host "cd /Ansible && git pull origin master"
+          done < <(grep -E '^[^#;]' inventory)
