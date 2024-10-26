@@ -1,9 +1,9 @@
-name: Auto Pull on Development
+name: Auto Pull on Master
 
 on:
   push:
     branches:
-      - Development
+      - master
 
 jobs:
   deploy:
