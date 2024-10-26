@@ -35,5 +35,5 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           for host in $(grep -Eo '^[^#;]+(\.[^#;]+)(com|net)' inventory); do
-            ssh -i ~/.ssh/id_rsa ubuntu@$ip "cd /Ansible && git pull origin master"
+            ssh -i ~/.ssh/id_rsa ubuntu@$host "cd /Ansible && git pull origin master"
           done
