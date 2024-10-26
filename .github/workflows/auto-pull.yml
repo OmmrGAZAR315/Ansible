@@ -36,7 +36,7 @@ jobs:
         run: |
           while read -r line; do
             # Extract the host and ansible_user from each line in the inventory
-            host=$(echo "$line" | grep -Eo '^[^ ]+')
+            host=$(echo "$line" | grep -Eo '^[^#;]+(\.[^#;]+)(com|net)')
             ansible_user=$(echo "$line" | grep -Eo 'ansible_user=[^ ]+' | cut -d'=' -f2)
 
             # If ansible_user is empty, set a default user (e.g., ubuntu)
