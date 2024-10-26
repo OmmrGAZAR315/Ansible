@@ -18,6 +18,11 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Install Ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+
       - name: Setup SSH for Access
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -30,9 +35,10 @@ jobs:
             ssh-keyscan -H $host >> ~/.ssh/known_hosts
           done
 
-      - name: Debug ansible_user
-        debug:
-          var: ansible_user
+      - name: Enable Debug Logging
+        run: |
+          echo "ACTIONS_RUNNER_DEBUG=true" >> $GITHUB_ENV
+          echo "ACTIONS_STEP_DEBUG=true" >> $GITHUB_ENV
 
       - name: Pull Latest Code on Servers
         env:
