@@ -30,6 +30,10 @@ jobs:
             ssh-keyscan -H $host >> ~/.ssh/known_hosts
           done
 
+  - name: Debug ansible_user
+    debug:
+      var: ansible_user
+
       - name: Pull Latest Code on Servers
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
