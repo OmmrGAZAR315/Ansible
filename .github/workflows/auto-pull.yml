@@ -40,5 +40,4 @@ jobs:
             ansible_user=$(echo "$line" | grep -Eo 'ansible_user=[^ ]+' | cut -d'=' -f2)
             echo host=$host ansible_user=$ansible_user"
             # Run SSH command to pull latest code
-            # ssh -i ~/.ssh/id_rsa $ansible_user@$host "cd /Ansible && git reset --hard origin/master"
           done < <(grep -E '^[^\[#;]' inventory)
