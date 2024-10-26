@@ -1,15 +1,14 @@
 ---
 
 - hosts: all
-  gather_facts: yes
+#  gather_facts: yes
   become: true
   tasks:
 
-  - name: update repository index
-    apt:
-      update_cache: true
-    when: ansible_distribution == "Centos"
-
-  - name: install nginx package
-    apt:
-      name: nginx
+  - name: install nginx & screen package
+    package:
+      name:
+        - "{{ nginx_package }}"
+        - "{{ screen_package }}"
+      state: latest
+      update_cache: yes
