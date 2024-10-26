@@ -1,0 +1,35 @@
+name: Auto Pull on Development
+
+on:
+  push:
+    branches:
+      - Development
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup SSH for Access
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 98.81.160.170 >> ~/.ssh/known_hosts
+
+      - name: Pull Latest Code on Server 1
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          ssh -i ~/.ssh/id_rsa user@your_server_1_ip "cd ~/Ansible && git pull origin master"
+
+#      - name: Pull Latest Code on Server 2
+#        env:
+#          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#        run: |
+#          ssh -i ~/.ssh/id_rsa user@your_server_2_ip "cd /path/to/your/app && git pull origin Development"
