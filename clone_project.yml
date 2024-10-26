@@ -1,0 +1,17 @@
+- hosts: all
+  become: true
+  gather_facts: no
+  vars:
+    repo_url: https://github.com/OmmrGAZAR315/Ansible
+  tasks:
+
+  - name: Clone Omar Ansible Project
+    ansible.builtin.git:
+      repo: "{{ repo_url }}"
+      dest: "/{{ repo_url | basename }}"
+      clone: yes
+
+  - name: Change Ownership of the Cloned Directory
+    ansible.builtin.command:
+      cmd: "chown -R {{ ansible_user }}:{{ ansible_user }} /{{ repo_url | basename }}"
+
