@@ -30,10 +30,10 @@ jobs:
             ssh-keyscan -H $host >> ~/.ssh/known_hosts
           done
 
-      - name: Pull Latest Code on Server Dev
+      - name: Pull Latest Code on Servers
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           for host in $(grep -Eo '^[^#;]+(\.[^#;]+)(com|net)' inventory); do
-            ssh -i ~/.ssh/id_rsa ubuntu@$host "cd /Ansible && git pull origin master"
+            ssh -i ~/.ssh/id_rsa {{ ansible_user }}@$host "cd /Ansible && git pull origin master"
           done
