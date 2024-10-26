@@ -25,16 +25,15 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H 98.81.160.170 >> ~/.ssh/known_hosts
+          # Extract IPs from the inventory file and add them to known_hosts
+          for host in $(grep -Eo '^[^#;]+(\.[^#;]+)(com|net)' inventory); do
+            ssh-keyscan -H $host >> ~/.ssh/known_hosts
+          done
 
       - name: Pull Latest Code on Server Dev
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          ssh -i ~/.ssh/id_rsa ubuntu@98.81.160.170 "cd ~/Ansible && git pull origin master"
-
-#      - name: Pull Latest Code on Server 2
-#        env:
-#          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-#        run: |
-#          ssh -i ~/.ssh/id_rsa user@your_server_2_ip "cd /path/to/your/app && git pull origin Development"
+          for host in $(grep -Eo '^[^#;]+(\.[^#;]+)(com|net)' inventory); do
+            ssh -i ~/.ssh/id_rsa ubuntu@$ip "cd /Ansible && git pull origin master"
+          done
