@@ -3,7 +3,7 @@ name: Auto Pull on Master
 on:
   push:
     branches:
-      - *
+      - "*"
 
 jobs:
   deploy:
