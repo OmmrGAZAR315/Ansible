@@ -7,12 +7,14 @@ while read -r line; do
  ssh -i ~/.ssh/id_ed25519 "$ansible_user@$host" "
     echo $ansible_user@$host
     cd /Ansible &&
+    git stash --include-untracked &&
     currentBranchName=\$(git rev-parse --abbrev-ref HEAD) &&
     echo \"Current branch is \$currentBranchName\" &&
     git fetch --all &&
     git checkout master &&
     git reset --hard origin/master &&
     git checkout \$currentBranchName
+    git stash pop
     printf \"\n\"
   " &
 done < <(grep -E '^[^\[#;]' inventory)
