@@ -1,4 +1,4 @@
-name: Auto Pull on Master
+name: Auto Pull Changes (All Branches)
 
 on:
   push:
