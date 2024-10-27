@@ -3,7 +3,7 @@ name: Auto Pull on Master
 on:
   push:
     branches:
-      - master
+      - *
 
 jobs:
   deploy:
@@ -34,7 +34,7 @@ jobs:
               host=$(echo "$line" | grep -Eo '^[^#;]+(\.[^#;]+)(com|net)')
               ansible_user=$(echo "$line" | grep -Eo 'ansible_user=[^ ]+' | cut -d'=' -f2)
               echo host=$host ansible_user=$ansible_user
-              ssh -i ~/.ssh/id_rsa $ansible_user@$host "cd /Ansible && git fetch && git reset --hard origin/master" &
+              ssh -i ~/.ssh/id_rsa $ansible_user@$host "cd /Ansible && git fetch && git reset --hard $(echo $GITHUB_REF | awk -F/ '{print $3}')" &
           done < <(grep -E '^[^\[#;]' inventory)
           wait
           echo "Code pulled on all servers"
