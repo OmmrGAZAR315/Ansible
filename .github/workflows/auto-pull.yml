@@ -40,8 +40,8 @@ jobs:
           
           while read -r line; do
             # Extract the host and ansible_user from each line in the inventory.ini
-            host=$(echo "$line" | grep -Eo '^[a-zA-Z0-9.-]+')
-            ansible_user=$(echo "$line" | grep -Eo 'ansible_user=\K\w+')
+            host=$(echo "$line" | grep -oP '^[a-zA-Z0-9.-]+')
+            ansible_user=$(echo "$line" | grep -oP 'ansible_user=\K\w+')
             echo "Connecting to $ansible_user@$host"
             if [ -n "$unresolvedHost" ] && grep -q "$host" unresolved_hosts.txt; then
               echo "Skipping $ansible_user@$host due to unresolved host"
