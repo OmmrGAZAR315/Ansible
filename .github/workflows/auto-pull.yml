@@ -42,6 +42,7 @@ jobs:
             # Extract the host and user from each line in the inventory.ini
             host=$(echo "$line" | grep -oP '^[a-zA-Z0-9.-]+')
             user=$(echo "$line" | grep -oP 'user=\K\w+')
+            user=$(echo "$line" | grep -oP 'backendDir=\K\S+')
             echo "Connecting to $user@$host"
             if [ -n "$unresolvedHost" ] && grep -q "$host" unresolved_hosts.txt; then
               echo "Skipping $user@$host due to unresolved host"
