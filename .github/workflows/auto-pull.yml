@@ -24,6 +24,8 @@ jobs:
           for host in $(grep -Eo '^[^#;]+(\.[^#;]+)(com|net)' inventory); do
             echo "Adding $host to known_hosts"
             ssh-keyscan -H $host >> ~/.ssh/known_hosts 2>/dev/null || echo "Warning: $host is unreachable or failed to add to known_hosts"
+            unresolvedHost=$(dig +short $host)
+            echo "unresolvedHost: $unresolvedHost"
           done
 
       - name: Pull Latest Code on Servers
