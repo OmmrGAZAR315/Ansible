@@ -37,7 +37,6 @@ jobs:
           # shellcheck disable=SC2095
           unresolvedHost=$(cat unresolved_hosts.txt || echo "No unresolved hosts")
 
-          echo "Unresolved Hosts: $unresolvedHost"
           branchName=$(echo "$GITHUB_REF" | awk -F/ '{print $3}')
           
           while read -r line; do
@@ -45,6 +44,10 @@ jobs:
             host=$(echo "$line" | grep -Eo '^[^#;]+(\.[^#;]+)(com|net)')
             ansible_user=$(echo "$line" | grep -Eo 'ansible_user=[^ ]+' | cut -d'=' -f2)
             echo "Connecting to $ansible_user@$host"
+            if [ -n "$unresolvedHost" ] && grep -q "$host" unresolved_hosts.txt; then
+              echo "Skipping $ansible_user@$host due to unresolved host"
+              continue
+            fi
 
             # Attempt SSH connection and execute commands
             ssh -o "StrictHostKeyChecking=no" "$ansible_user@$host" "
