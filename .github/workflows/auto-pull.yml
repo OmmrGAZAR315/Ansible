@@ -36,9 +36,11 @@ jobs:
             # Extract the host and ansible_user from each line in the inventory
             host=$(echo "$line" | grep -Eo '^[^#;]+(\.[^#;]+)(com|net)')
             ansible_user=$(echo "$line" | grep -Eo 'ansible_user=[^ ]+' | cut -d'=' -f2)
-            echo host="$host" ansible_user="$ansible_user"
-            ssh "$ansible_user@$host" "
-              echo $ansible_user@$host
+            echo "Connecting to $ansible_user@$host"
+
+            # Attempt SSH connection and execute commands
+            ssh -o "StrictHostKeyChecking=no" "$ansible_user@$host" "
+              echo 'Connected to $ansible_user@$host'
               cd /Ansible &&
               git stash --include-untracked &&
               currentBranchName=\$(git rev-parse --abbrev-ref HEAD) &&
@@ -46,10 +48,11 @@ jobs:
               git fetch --all &&
               git checkout $branchName &&
               git reset --hard origin/$branchName &&
-              git checkout \$currentBranchName
+              git checkout \$currentBranchName &&
               git stash pop
-              printf \"\n\"
-          " &
+            " || echo "Error: Could not update code on $ansible_user@$host" &
+
           done < <(grep -E '^[^\[#;]' inventory)
           wait
-          echo "Code pulled on all servers"
+          echo "Code pull process completed on all servers"
+      
