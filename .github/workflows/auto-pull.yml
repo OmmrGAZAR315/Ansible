@@ -25,7 +25,6 @@ jobs:
             echo "Adding $host to known_hosts"
             ssh-keyscan -H $host >> ~/.ssh/known_hosts 2>/dev/null || echo "Warning: $host is unreachable or failed to add to known_hosts"
             unresolvedHost=$host
-            echo "unresolvedHost: $unresolvedHost"
           done
 
       - name: Pull Latest Code on Servers
@@ -33,6 +32,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           # shellcheck disable=SC2095
+            echo "unresolvedHost: $unresolvedHost"
           branchName=$(echo "$GITHUB_REF" | awk -F/ '{print $3}')
           while read -r line; do
             # Extract the host and ansible_user from each line in the inventory
