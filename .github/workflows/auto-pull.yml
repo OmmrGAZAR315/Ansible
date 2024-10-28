@@ -34,7 +34,6 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
-          # shellcheck disable=SC2095
           unresolvedHost=$(cat unresolved_hosts.txt || echo "No unresolved hosts")
 
           branchName=$(echo "$GITHUB_REF" | awk -F/ '{print $3}')
