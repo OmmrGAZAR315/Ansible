@@ -1,19 +1,19 @@
-name: Auto Pull Changes (All Branches)
+name: Auto-Pull Workflow
 
 on:
   workflow_call:
-
+    inputs:
+      SSH_PRIVATE_KEY:
+        description: 'The SSH private key for authentication'
+        required: true
+        type: string
 
 jobs:
-  deploy:
+  auto-pull:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup SSH for Access
+      - name: Use SSH key
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: ${{ inputs.SSH_PRIVATE_KEY }}
         run: |
-          echo "$SSH_PRIVATE_KEY"
-
+          echo "Using the SSH private key: $SSH_PRIVATE_KEY"
