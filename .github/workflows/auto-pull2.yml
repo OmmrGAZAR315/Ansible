@@ -15,6 +15,6 @@ jobs:
     env:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     steps:
-      - run: echo ${{ needs.job1.input.SSH_PRIVATE_KEY }}
+      - run: echo ${{ needs.job1.input.ssh_key }}
 
 
