@@ -7,7 +7,7 @@ on:
 
 jobs:
   auto-pull:
-    uses: Learnovia-egy/org-workflows/.github/workflows/auto-pull.yml@main
+    uses: github.com/OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@main
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     with:
