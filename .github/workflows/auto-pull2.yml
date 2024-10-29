@@ -7,11 +7,17 @@ on:
 
 jobs:
   auto-pull:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Specify the runner
+    env:                     # Define environment variables for the entire job
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}  # Add the SSH private key here
+
     steps:
-      - name: Print secrets
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        run: |
-          echo "Secrets:"
-          echo "${SSH_PRIVATE_KEY}"
+      - name: Call Auto Pull Workflow
+        uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
+        with:
+          ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          commands: |
+            php artisan migrate
+            php artisan db:seed --class=PermissionSeeder
+            php artisan db:seed --class=TranslationSeeder
+            composer install

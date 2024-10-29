@@ -7,6 +7,10 @@ permissions:
 on:
   workflow_call:
     inputs:
+      ssh_key:
+        description: "SSH private key for server access"
+        required: true
+        type: string
       commands:
         description: "Commands to run based on repository"
         required: false
