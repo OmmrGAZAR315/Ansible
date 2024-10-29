@@ -28,6 +28,7 @@ jobs:
           # Extract IPs from the inventory.ini file and add them to known_hosts with error handling
           for host in $(grep -Eo '^[^#;]+(\.[^#;]+)(com|net)' inventory.ini); do
             echo "Adding $host to known_hosts"
+            echo "....$SSH_PRIVATE_KEY...."
             ssh-keyscan -H $host >> ~/.ssh/known_hosts 2>/dev/null || {
               echo "Warning: $host is unreachable or failed to add to known_hosts"
               echo "$host" >> unresolved_hosts.txt
