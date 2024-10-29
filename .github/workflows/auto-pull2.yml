@@ -20,4 +20,4 @@ jobs:
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.TEST }}
     with:
-      ssh_key: ${{ secrets.TEST }}
+      ssh_key: $SSH_PRIVATE_KEY
