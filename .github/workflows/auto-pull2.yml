@@ -9,6 +9,7 @@ jobs:
   auto-pull:
     runs-on: ubuntu-latest
     steps:
+      - name: Call Auto-Pull Workflow
       - with: # Set the secret as an input
       - secret: ${{ secrets }}
       - name: Print secrets
