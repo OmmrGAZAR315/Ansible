@@ -10,9 +10,7 @@ jobs:
     uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
     with:
       commands: |
-        $SSH_PRIVATE_KEY
-        echo $SSH_PRIVATE_KEY
-        php artisan migrate
-        php artisan db:seed --class=PermissionSeeder
-        php artisan db:seed --class=TranslationSeeder
+        php artisan migrate &&
+        php artisan db:seed --class=PermissionSeeder &&
+        php artisan db:seed --class=TranslationSeeder &&
         composer install
