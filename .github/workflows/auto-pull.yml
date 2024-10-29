@@ -22,7 +22,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           mkdir -p ~/.ssh
-          echo $SSH_PRIVATE_KEY
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
@@ -54,7 +53,7 @@ jobs:
             fi
 
             # Attempt SSH connection and execute commands
-            ssh -o "StrictHostKeyChecking=no" "$user@$host" "
+            ssh -i ~/.ssh/id_rsa -o "StrictHostKeyChecking=no" "$user@$host" "
               echo 'Connected to $user@$host'
               cd /Ansible &&
               git stash --include-untracked &&
