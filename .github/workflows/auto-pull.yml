@@ -1,7 +1,7 @@
 name: Auto Pull Changes (All Branches)
 
 on:
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   deploy:
