@@ -1,9 +1,12 @@
 name: Auto Pull Changes (All Branches)
 
 on:
-  push:
-    branches:
-      - "*"
+  workflow_call:
+    inputs:
+      commands:
+        description: "Commands to run based on repository"
+        required: false
+        default: ""
 
 jobs:
   deploy:
@@ -52,13 +55,17 @@ jobs:
             # Attempt SSH connection and execute commands
             ssh -o "StrictHostKeyChecking=no" "$user@$host" "
               echo 'Connected to $user@$host'
-              cd $backendDir &&
+              cd /Ansible &&
               git stash --include-untracked &&
               currentBranchName=\$(git rev-parse --abbrev-ref HEAD) &&
               echo \"Current branch is \$currentBranchName\" &&
               git fetch --all &&
               git checkout $branchName &&
               git reset --hard origin/$branchName &&
+              # Run commands passed from the child workflow
+              ${{
+                inputs.commands
+              }}
               git checkout \$currentBranchName &&
               git stash pop
             " || echo "Error: Could not update code on $user@$host" &
