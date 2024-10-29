@@ -11,8 +11,8 @@ jobs:
     steps:
       - name: Set secrets as environment variables
         env:
-          super_secret1: ${{ secrets.SECRET_NAME1 }} # replace SECRET_NAME1 with the actual secret name
-          super_secret2: ${{ secrets.SECRET_NAME2 }} # replace SECRET_NAME2 with the actual secret name
+          super_secret1: ${{ secrets }} # replace SECRET_NAME1 with the actual secret name
+          super_secret2: ${{ secrets }} # replace SECRET_NAME2 with the actual secret name
         run: |
           echo "super_secret1: $super_secret1"
           echo "super_secret2: $super_secret2"
