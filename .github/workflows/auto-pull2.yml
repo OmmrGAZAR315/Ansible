@@ -7,11 +7,12 @@ on:
 
 jobs:
   auto-pull:
-    uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
+    uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master
+    env:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     with:
-      ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: echo "Connecting $ssh_key"
       commands: |
+        ssh-key: ${{ SSH_PRIVATE_KEY }}
         php artisan migrate
         php artisan db:seed --class=PermissionSeeder
         php artisan db:seed --class=TranslationSeeder
