@@ -8,5 +8,6 @@ on:
 jobs:
   auto-pull:
     uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
-    with:
-      env: ${{ secrets.SSH_PRIVATE_KEY }}
+    secrets:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
