@@ -7,7 +7,7 @@ on:
 
 jobs:
   job1:
-    uses: OmmrGAZAR315/Ansible/.github/workflows/called-workflow.yml@v1
+    uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
 
   job2:
     runs-on: ubuntu-latest
