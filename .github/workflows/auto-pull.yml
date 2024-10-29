@@ -64,7 +64,7 @@ jobs:
           
               # Run commands passed from the child workflow
               ${{
-                inputs.commands
+                inputs.command
               }} &&
 
               git checkout \$currentBranchName &&
