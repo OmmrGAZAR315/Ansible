@@ -6,14 +6,18 @@ on:
       - "*"
 
 jobs:
-  job1:
+  # Job that calls a reusable workflow
+  auto-pull:
     uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
+    secrets:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
-  job2:
-    - name: test
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: |
-        echo "Hello World $SSH_PRIVATE_KEY "
-      
-
+  # Job with individual steps
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display SSH Key Environment Variable
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "Hello World, the SSH key is set."
