@@ -1,12 +1,7 @@
 name: Auto Pull Changes (All Branches)
 
 on:
-  workflow_call:
-    inputs:
-      secrets2:
-        description: 'Personal Access Token'
-        required: true
-        type: string
+  workflow_dispatch:
 
 jobs:
   deploy:
