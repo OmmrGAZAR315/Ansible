@@ -7,14 +7,11 @@ on:
 
 jobs:
   auto-pull:
-    uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b  # Reference the reusable workflow here
-    secrets: # Specify the secrets to be used in the reusable workflow
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-    with:
-      commands: |
-        php artisan migrate &&
-        php artisan db:seed --class=PermissionSeeder &&
-        php artisan db:seed --class=TranslationSeeder &&
-        composer install
-    
-        
+    runs-on: ubuntu-latest
+    steps:
+      - with: # Set the secret as an input
+      - secret: ${{ secrets }}
+      - name: Print secrets
+        run: |
+          echo "Secrets:"
+          echo "${secret}"
