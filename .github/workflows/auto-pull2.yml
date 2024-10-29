@@ -9,9 +9,14 @@ jobs:
   auto-pull:
     runs-on: ubuntu-latest
     steps:
-      - name: Call Auto-Pull Workflow
+      - name: Hello world action
         with: # Set the secret as an input
-          secret: ${{ secrets }}
+          super_secret1: ${{ secrets }}
+        env: # Or as an environment variable
+          super_secret2: ${{ secrets }}
         run: |
-          echo "Secrets:"
-          echo "${secret}"
+            echo "Hello world!"
+            echo "The super secret is ${{ super_secret1 }}"
+            echo "The super secret is ${{ super_secret2 }}"
+            echo "The super secret
+    
