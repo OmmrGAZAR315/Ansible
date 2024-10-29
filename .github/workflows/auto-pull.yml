@@ -1,9 +1,5 @@
 name: Auto Pull Changes (All Branches)
 
-permissions:
-  contents: read
-  secrets: read
-
 on:
   workflow_call:
     inputs:
