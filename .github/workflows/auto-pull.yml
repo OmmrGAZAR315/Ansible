@@ -53,7 +53,7 @@ jobs:
             fi
 
             # Attempt SSH connection and execute commands
-            ssh -i ~/.ssh/id_rsa -o "StrictHostKeyChecking=no" "$user@$host" "
+            ssh -o "StrictHostKeyChecking=no" "$user@$host" "
               echo 'Connected to $user@$host'
               cd /Ansible &&
               git stash --include-untracked &&
