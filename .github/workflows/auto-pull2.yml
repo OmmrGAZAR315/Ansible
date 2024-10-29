@@ -10,6 +10,7 @@ jobs:
     uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
     with:
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: echo "Connecting $ssh_key"
       commands: |
         php artisan migrate
         php artisan db:seed --class=PermissionSeeder
