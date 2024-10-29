@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Call Auto-Pull Workflow
       - with: # Set the secret as an input
-      - secret: ${{ secrets }}
+          secret: ${{ secrets }}
       - name: Print secrets
         run: |
           echo "Secrets:"
