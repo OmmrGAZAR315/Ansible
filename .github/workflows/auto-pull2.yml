@@ -15,3 +15,8 @@ jobs:
         run: |
           echo "Secrets:"
           echo "${SSH_PRIVATE_KEY}"
+
+      - name: Call Auto-Pull Workflow
+        uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
+        with:
+          ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
