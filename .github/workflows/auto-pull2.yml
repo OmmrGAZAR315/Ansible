@@ -10,13 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Hello world action
-        with: # Set the secret as an input
-          super_secret1: ${{ secrets }}
-        env: # Or as an environment variable
-          super_secret2: ${{ secrets }}
-        run: |
-            echo "Hello world!"
-            echo "The super secret is ${{ super_secret1 }}"
-            echo "The super secret is ${{ super_secret2 }}"
-            echo "The super secret
-    
+        uses: actions/hello-world-javascript-action@v1 # specify an action to use
+        with:
+          super_secret1: ${{ secrets.SECRET_NAME1 }} # replace SECRET_NAME1 with the actual secret name
+        env:
+          super_secret2: ${{ secrets.SECRET_NAME2 }} # replace SECRET_NAME2 with the actual secret name
+
+      - name: Run command
+        run: echo "This is a custom run command"
+
