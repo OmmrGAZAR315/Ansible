@@ -11,6 +11,7 @@ jobs:
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     with:
+      ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
       commands: |
         php artisan migrate
         php artisan db:seed --class=PermissionSeeder
