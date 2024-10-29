@@ -8,11 +8,6 @@ on:
         required: false
         default: ""
         type: string
-      SSH_PRIVATE_KEY:
-        description: "SSH private key for server access"
-        required: true  # Make it required to ensure it’s provided
-        type: string
-
 
 jobs:
   deploy:
@@ -24,7 +19,7 @@ jobs:
 
       - name: Setup SSH for Access
         env:
-          SSH_PRIVATE_KEY: ${{ inputs.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
@@ -41,7 +36,7 @@ jobs:
 
       - name: Pull Latest Code on Servers
         env:
-          SSH_PRIVATE_KEY: ${{ inputs.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           unresolvedHost=$(cat unresolved_hosts.txt || echo "No unresolved hosts")
 
