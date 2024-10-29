@@ -7,15 +7,13 @@ on:
 
 jobs:
   auto-pull:
-    uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
-    secrets:
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-    with:
-      commands: |
-        echo $ssh_key
-        $SSH_PRIVATE_KEY
-        echo $SSH_PRIVATE_KEY
-        php artisan migrate
-        php artisan db:seed --class=PermissionSeeder
-        php artisan db:seed --class=TranslationSeeder
-        composer install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check SSH_PRIVATE_KEY presence
+        run: |
+          if [[ -z "${{ secrets.SSH_PRIVATE_KEY }}" ]]; then
+            echo "SSH_PRIVATE_KEY is not available"
+            exit 1
+          else
+            echo "SSH_PRIVATE_KEY is detected"
+          fi
