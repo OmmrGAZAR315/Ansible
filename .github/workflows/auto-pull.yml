@@ -8,8 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Access SSH Private Key
-        secrets:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
