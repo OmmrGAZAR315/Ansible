@@ -3,15 +3,12 @@ name: Auto Pull Changes (All Branches)
 on:
   workflow_call:
     inputs:
-      ssh_key:
-        description: "SSH private key for server access"
+      config-path:
         required: true
         type: string
-      commands:
-        description: "Commands to run based on repository"
-        required: false
-        default: ""
-        type: string
+    secrets:
+      token:
+        required: true
 
 jobs:
   deploy:

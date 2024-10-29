@@ -6,9 +6,7 @@ on:
       - "*"
 
 jobs:
-  job1:
+  call-workflow-passing-data:
     uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
-    secrets:
-      ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
-      with:
-        ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+    secrets: inherit
+
