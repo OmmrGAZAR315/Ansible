@@ -1,9 +1,0 @@
-name: Call Reusable Auto-Pull Workflow
-
-on:
-  workflow_call:
-
-jobs:
-  auto-pull:
-    uses: OmmrGAZAR315/Ansible/triggerBigBoy.yml@master3-b
-    secrets: inherit
