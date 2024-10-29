@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set secrets as environment variables
-        env:
-          super_secret1: ${{ secrets.SSH_PRIVATE_KEY }} # replace SECRET_NAME1 with the actual secret name
-          super_secret2: ${{ secrets.SSH_PRIVATE_KEY }} # replace SECRET_NAME2 with the actual secret name
+        with:
+            super_secret1: ${{ secrets.SUPER_SECRET1 }}
+            super_secret2: ${{ secrets.SUPER_SECRET2 }}
         run: |
           echo "super_secret1: $super_secret1"
           echo "super_secret2: $super_secret2"
