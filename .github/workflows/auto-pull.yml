@@ -2,10 +2,11 @@ name: Auto Pull Changes (All Branches)
 
 on:
   workflow_call:
-    input:
+    inputs:
       secrets:
+        secrets:
         token:
-          required: true
+        required: true
 
 jobs:
   deploy:
