@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set secrets as environment variables
-        uses: ./.github/workflows/auto-pull.yml
+        uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
         with:
           ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
           commands: "echo 'Hello World'"
