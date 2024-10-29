@@ -2,6 +2,11 @@ name: Auto Pull Changes (All Branches)
 
 on:
   workflow_call:
+    inputs:
+      command:
+        description: 'Commands to run on the servers'
+        required: true
+        type: string
 
 jobs:
   deploy:
