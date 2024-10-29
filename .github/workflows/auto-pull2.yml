@@ -7,7 +7,9 @@ on:
 
 jobs:
   auto-pull:
-    uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
-    secrets:
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print secrets
+        run: |
+          echo "Secrets:"
+          echo "${SSH_PRIVATE_KEY}"
