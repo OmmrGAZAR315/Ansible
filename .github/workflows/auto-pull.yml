@@ -9,6 +9,6 @@ jobs:
     steps:
       - name: Access SSH Private Key
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: ${{ github.secret_source.SSH_PRIVATE_KEY }}
         run: |
           echo "Using the SSH private key: $SSH_PRIVATE_KEY" # This will be masked in logs
