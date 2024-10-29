@@ -9,4 +9,4 @@ jobs:
   auto-pull:
     uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
     secrets:
-      SSH_PRIVATE_KEY: ${{ secrets.TEST }}
+      ssh-key: ${{ secrets.TEST }}
