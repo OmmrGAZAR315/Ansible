@@ -9,9 +9,9 @@ jobs:
   auto-pull:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
       - name: Print secrets
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "Secrets:"
           echo "${SSH_PRIVATE_KEY}"
