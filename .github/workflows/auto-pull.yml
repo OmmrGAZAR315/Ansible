@@ -3,9 +3,6 @@ name: Auto Pull Changes (All Branches)
 on:
   workflow_call:
     inputs:
-      config-path:
-        required: true
-        type: string
     secrets:
       token:
         required: true
