@@ -8,9 +8,3 @@ on:
 jobs:
   auto-pull:
     uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
-    with:
-      commands: |
-        php artisan migrate &&
-        php artisan db:seed --class=PermissionSeeder &&
-        php artisan db:seed --class=TranslationSeeder &&
-        composer install
