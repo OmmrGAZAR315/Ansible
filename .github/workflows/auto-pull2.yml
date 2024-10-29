@@ -11,4 +11,4 @@ jobs:
     secrets:
       ssh-key: ${{ secrets.TEST }}
     with:
-      ssh-key: ${{ secrets.TEST }}
+      ssh-key: $ssh-key
