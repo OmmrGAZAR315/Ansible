@@ -56,6 +56,11 @@ jobs:
               git fetch --all &&
               git checkout $branchName &&
               git reset --hard origin/$branchName &&
+          
+              # Run commands passed from the child workflow
+              ${{
+                inputs.commands
+              }} &&
 
               git checkout \$currentBranchName &&
               git stash pop
