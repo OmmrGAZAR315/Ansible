@@ -6,12 +6,9 @@ on:
       - "*"
 
 jobs:
-  auto-pull:
-    runs-on: ubuntu-latest
-      - name: Set secrets as environment variables
-        uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
-        with:
-          ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          commands: "echo 'Hello World'"
+  call-workflow-passing-data:
+    uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
+    secrets:
+      repo-token: ${{ secrets.SSH_PRIVATE_KEY }} # pass just this secret
 
 
