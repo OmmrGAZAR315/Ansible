@@ -2,18 +2,15 @@ name: Auto-Pull Workflow
 
 on:
   workflow_call:
-    inputs:
-      SSH_PRIVATE_KEY:
-        description: 'The SSH private key for authentication'
-        required: true
-        type: string
 
 jobs:
   auto-pull:
     runs-on: ubuntu-latest
     steps:
       - name: Access SSH Private Key
+        secrets:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         env:
-          SSH_PRIVATE_KEY: ${{ inputs.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "Using the SSH private key: $SSH_PRIVATE_KEY" # This will be masked in logs
