@@ -7,7 +7,7 @@ on:
 
 jobs:
   auto-pull:
-    uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master
+    uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
     with:
