@@ -10,7 +10,7 @@ jobs:
   auto-pull:
     uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
     secrets:
-      ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      ssh-key: ${{ secrets.TEST }}
 
   # Job with individual steps
   test:
