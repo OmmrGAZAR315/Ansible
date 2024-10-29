@@ -6,18 +6,7 @@ on:
       - "*"
 
 jobs:
-  jobs2:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Access and echo secret as an environment variable
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.TEST }} # Retrieve the secret securely
-        run: |
-          echo "My secret variable: $MY_SECRET_VAR" # This will be masked in logs
-
   auto-pull:
     uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.TEST }}
-    with:
-      ssh_key: $SSH_PRIVATE_KEY
