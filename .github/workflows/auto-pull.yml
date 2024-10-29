@@ -2,7 +2,7 @@ name: Auto Pull Changes (All Branches)
 
 on:
   workflow_call:
-    inputs:
+    input:
     secrets:
       token:
         required: true
