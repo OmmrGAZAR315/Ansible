@@ -4,8 +4,7 @@ on:
   workflow_call:
     inputs:
       secrets:
-        secrets:
-        token:
+        description: 'Personal Access Token'
         required: true
 
 jobs:
