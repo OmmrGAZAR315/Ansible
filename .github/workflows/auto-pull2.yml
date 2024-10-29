@@ -9,5 +9,5 @@ jobs:
   call-workflow-passing-data:
     uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
     with:
-      secrets2: ${{ secrets.SSH_PRIVATE_KEY }}
+      secrets2: ${{ secrets.TEST }}
 
