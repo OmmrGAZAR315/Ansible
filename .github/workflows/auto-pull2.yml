@@ -8,7 +8,6 @@ on:
 jobs:
   auto-pull:
     runs-on: ubuntu-latest
-    steps:
       - name: Set secrets as environment variables
         uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
         with:
