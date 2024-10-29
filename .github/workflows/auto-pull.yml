@@ -1,12 +1,19 @@
-name: Call Reusable Auto-Pull Workflow
+name: Auto Pull Changes (All Branches)
 
 on:
-  push:
-    branches:
-      - "*"
+  workflow_call:
+
 
 jobs:
-  auto-pull:
-    uses: OmmrGAZAR315/Ansible/.github/workflows/auto-pull.yml@master3-b
-    with:
-      SSH_PRIVATE_KEY: ${{ secrets.TEST }}
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH for Access
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "$SSH_PRIVATE_KEY"
+
