@@ -3,7 +3,7 @@
   gather_facts: no
   become: yes
   vars:
-    ssh_public_key: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"  # Ensure this points to your public SSH key
+    ssh_public_key: "{{ lookup('file', '~/.ssh/githubKey') }}"  # Ensure this points to your public SSH key
   tasks:
     - name: Ensure the PEM file has the correct permissions
       ansible.builtin.file:
