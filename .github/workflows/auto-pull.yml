@@ -20,8 +20,8 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          # Extract IPs from the inventory file and add them to known_hosts
-          for host in $(grep -Eo '^[^#;]+(\.[^#;]+)(com|net)' inventory); do
+          # Extract IPs from the inventory.ini file and add them to known_hosts
+          for host in $(grep -Eo '^[^#;]+(\.[^#;]+)(com|net)' inventory.ini); do
             ssh-keyscan -H $host >> ~/.ssh/known_hosts
           done
 
@@ -32,7 +32,7 @@ jobs:
           # shellcheck disable=SC2095
           branchName=$(echo "$GITHUB_REF" | awk -F/ '{print $3}')
           while read -r line; do
-            # Extract the host and ansible_user from each line in the inventory
+            # Extract the host and ansible_user from each line in the inventory.ini
             host=$(echo "$line" | grep -Eo '^[^#;]+(\.[^#;]+)(com|net)')
             ansible_user=$(echo "$line" | grep -Eo 'ansible_user=[^ ]+' | cut -d'=' -f2)
             echo host="$host" ansible_user="$ansible_user"
@@ -49,6 +49,6 @@ jobs:
               git stash pop
               printf \"\n\"
           " &
-          done < <(grep -E '^[^\[#;]' inventory)
+          done < <(grep -E '^[^\[#;]' inventory.ini)
           wait
           echo "Code pulled on all servers"
