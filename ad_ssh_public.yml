@@ -1,0 +1,21 @@
+- name: Add SSH key to remote servers
+  hosts: all
+  gather_facts: no
+  become: yes
+  vars:
+    ssh_public_key: "{{ lookup('file', '~/.ssh/githubKey') }}"  # Ensure this points to your public SSH key
+  tasks:
+    - name: Ensure the PEM file has the correct permissions
+      ansible.builtin.file:
+        path: "{{ ansible_private_key_file }}"
+        mode: '0400'
+      delegate_to: localhost
+      run_once: true
+
+    - name: Add public key to authorized_keys
+      ansible.builtin.authorized_key:
+        user: "{{ ansible_user | default('ubuntu') }}"
+        key: "{{ ssh_public_key }}"
+        state: present
+      vars:
+        ansible_ssh_private_key_file: "{{ ansible_private_key_file }}"

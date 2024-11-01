@@ -1,0 +1,51 @@
+- name: Upload private key to remote servers
+  hosts: all
+  gather_facts: no
+  become: yes
+  vars:
+    private_key_path: "{{ lookup('env', 'HOME') }}/.ssh/githubKey"  # Path to your private key on the local machine
+    remote_private_key_path: "/home/{{ ansible_user | default('ubuntu') }}/.ssh/githubKey"  # Destination path on remote server
+  tasks:
+    - name: Ensure .ssh directory exists on remote server
+  #    ansible.builtin.file:
+  #      path: "/home/{{ ansible_user | default('ubuntu') }}/.ssh"
+  #      state: directory
+  #      mode: '0700'
+  #      owner: "{{ ansible_user | default('ubuntu') }}"
+  #      group: "{{ ansible_user | default('ubuntu') }}"
+  #    delegate_to: localhost
+
+    - name: Copy private key to remote server
+      ansible.builtin.copy:
+        src: "{{ private_key_path }}"
+        dest: "{{ remote_private_key_path }}"
+        mode: '0600'
+        owner: "{{ ansible_user | default('ubuntu') }}"
+        group: "{{ ansible_user | default('ubuntu') }}"
+
+    - name: Ensure private key has correct permissions on remote server
+      ansible.builtin.file:
+        path: "{{ remote_private_key_path }}"
+        mode: '0600'
+        owner: "{{ ansible_user | default('ubuntu') }}"
+        group: "{{ ansible_user | default('ubuntu') }}"
+
+    - name: Configure SSH for GitHub access
+      ansible.builtin.blockinfile:
+        path: "/home/{{ ansible_user | default('ubuntu') }}/.ssh/config"
+        create: yes
+        owner: "{{ ansible_user | default('ubuntu') }}"
+        group: "{{ ansible_user | default('ubuntu') }}"
+        mode: '0600'
+        block: |
+          # Specific settings for GitHub
+          Host github.com
+              HostName github.com
+              User git
+              IdentityFile ~/.ssh/githubKey
+
+    - name: Change Git remote URL
+      ansible.builtin.shell: git remote set-url origin git@github.com:OmmrGAZAR315/Ansible.git
+      args:
+        chdir: "{{ project_dir }}"
+      become_user: "{{ ansible_user | default('ubuntu') }}"
