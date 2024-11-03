@@ -4,10 +4,17 @@
   become: yes
   vars:
     ssh_public_key: "{{ lookup('file', '~/.ssh/githubKey') }}"  # Ensure this points to your public SSH key
+    private_key_file: ""
+
+  pre_tasks:
+    - name: Check if private_key_file is set
+      fail:
+        msg: "The 'private_key_file' variable is required and must not be empty."
+      when: private_key_file | length == 0
   tasks:
     - name: Ensure the PEM file has the correct permissions
       ansible.builtin.file:
-        path: "{{ ansible_private_key_file }}"
+        path: "{{ private_key_file }}"
         mode: '0400'
       delegate_to: localhost
       run_once: true
@@ -18,4 +25,4 @@
         key: "{{ ssh_public_key }}"
         state: present
       vars:
-        ansible_ssh_private_key_file: "{{ ansible_private_key_file }}"
+        ansible_ssh_private_key_file: "{{ private_key_file }}"
